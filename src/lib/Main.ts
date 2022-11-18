@@ -37,6 +37,8 @@ export default class MainStage {
 
   private composer: EffectComposer
 
+  private skip = false
+
   private raf = 0
 
   constructor() {
@@ -129,7 +131,7 @@ export default class MainStage {
 
     const recordedChunks: BlobPart[] = []
 
-    const stream = this.domElement.captureStream()
+    const stream = this.domElement.captureStream(30)
 
     const mediaRecorder = new MediaRecorder(stream, {
       mimeType,
@@ -173,7 +175,10 @@ export default class MainStage {
   private render(time: number) {
     this.update(time)
     // this.renderer.render(this.scene, this.camera)
-    this.composer.render()
+    if (!this.skip) {
+      this.composer.render()
+    }
+    this.skip = !this.skip
     this.raf = requestAnimationFrame((time) => {
       this.render(time)
     })

@@ -4,7 +4,7 @@ module.exports = defineConfig({
   publicPath: './',
   chainWebpack: (config) => {
     config.plugin('html').tap((args) => {
-      args[0].title = 'Flower'
+      args[0].title = 'Test'
       return args
     })
     config.module
